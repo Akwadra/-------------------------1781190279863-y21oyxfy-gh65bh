@@ -241,13 +241,22 @@ textarea,
   font-weight: 700;
 }
 
-header.site-header {
+#site-header {
   position: sticky;
   top: 0;
   z-index: 20;
   backdrop-filter: blur(24px);
-  background: rgba(255, 250, 243, 0.72);
+  background: rgba(255, 250, 243, 0.94);
   border-bottom: 1px solid rgba(24, 33, 49, 0.08);
+}
+
+#site-header .nav-shell {
+  position: relative;
+}
+
+#site-header .topbar {
+  position: relative;
+  z-index: 1;
 }
 
 .topbar {
@@ -1471,31 +1480,53 @@ tbody td {
 }
 
 @media (max-width: 860px) {
-  .site-nav {
-    position: absolute;
-    inset-inline: 1rem;
-    top: 6rem;
-    display: grid;
-    gap: 0.3rem;
-    padding: 1rem;
-    border-radius: 24px;
-    background: rgba(255, 250, 243, 0.96);
-    box-shadow: var(--shadow);
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(-10px);
-  }
-
-  .site-nav.is-open {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateY(0);
+  .nav-shell {
+    align-items: flex-start;
   }
 
   .nav-toggle {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    order: 1;
+    margin-inline-start: auto;
+  }
+
+  .nav-actions {
+    order: 2;
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .site-nav {
+    order: 3;
+    flex-basis: 100%;
+    display: none;
+    gap: 0.3rem;
+    margin-top: 0.8rem;
+    padding: 1rem;
+    border-radius: 24px;
+    background: rgba(255, 250, 243, 0.98);
+    border: 1px solid rgba(24, 33, 49, 0.08);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(24px);
+  }
+
+  .site-nav.is-open {
+    display: grid;
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+  }
+
+  .nav-shell .brand {
+    order: 0;
+    max-width: calc(100% - 3.5rem);
+  }
+
+  .nav-shell .nav-actions,
+  .nav-shell .site-nav {
+    width: 100%;
   }
 
   .hero-stats,

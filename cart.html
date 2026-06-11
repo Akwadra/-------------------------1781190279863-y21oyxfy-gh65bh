@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>السلة | أكوادرا للمشروبات</title>
+    <meta name="description" content="سلة الجملة مع تعديل الكميات وحساب النقاط والإجمالي قبل إتمام الطلب." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Changa:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="script.js"></script>
+  </head>
+  <body data-page="cart">
+    <div id="site-header"></div>
+
+    <main id="main">
+      <section class="section page-hero">
+        <div class="container hero-banner glass reveal">
+          <div>
+            <span class="eyebrow">سلة الجملة</span>
+            <h1>راجع الأصناف المختارة، عدل الكميات، ثم انتقل إلى الدفع أو التواصل.</h1>
+            <p>هذه السلة محسوبة لمبيعات الجملة: تعديل فوري، ترتيب، تصفية، وتقسيم صفحات إذا زادت العناصر.</p>
+          </div>
+          <div class="banner-pills">
+            <span class="chip">تعديل الكمية</span>
+            <span class="chip">حذف عنصر</span>
+            <span class="chip">حساب النقاط</span>
+            <span class="chip">إتمام الطلب</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container cart-layout">
+          <div class="glass reveal panel">
+            <div class="catalog-toolbar compact">
+              <label class="field search-field">
+                <span>بحث في السلة</span>
+                <input id="cart-search" type="search" placeholder="ابحث باسم الصنف" />
+              </label>
+              <label class="field select-field">
+                <span>الترتيب</span>
+                <select id="cart-sort">
+                  <option value="latest">الأحدث</option>
+                  <option value="name">الاسم</option>
+                  <option value="qty-desc">الأعلى كمية</option>
+                  <option value="subtotal-desc">الأعلى إجماليًا</option>
+                </select>
+              </label>
+            </div>
+            <div id="cart-list" class="cart-list"></div>
+            <div id="cart-pagination" class="pagination"></div>
+          </div>
+
+          <aside class="glass reveal summary-panel">
+            <span class="eyebrow">ملخص الجملة</span>
+            <div id="cart-summary"></div>
+            <a class="btn btn-primary full-width" href="checkout.html">انتقل إلى الدفع</a>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <div id="site-footer"></div>
+  </body>
+</html>

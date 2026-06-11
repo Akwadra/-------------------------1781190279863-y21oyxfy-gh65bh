@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>لوحة الجملة | أكوادرا للمشروبات</title>
+    <meta name="description" content="لوحة إدارة الطلبات، السلة، والحسابات مع CRUD كامل وجداول قابلة للبحث والترتيب والتصفية." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Changa:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="script.js"></script>
+  </head>
+  <body data-page="dashboard">
+    <div id="site-header"></div>
+
+    <main id="main">
+      <section class="section page-hero">
+        <div class="container hero-banner glass reveal">
+          <div>
+            <span class="eyebrow">لوحة الإدارة</span>
+            <h1>إدارة طلبات الجملة، العملاء، والمخزون من لوحة واحدة ذات بيانات واضحة وإجراءات CRUD مباشرة.</h1>
+            <p>
+              صممت هذه اللوحة لتناسب فرق العمليات: جداول، فلاتر، بحث، ترتيب، صفحات متعددة، وإجراءات تعديل وحذف وتكرار وإضافة.
+            </p>
+          </div>
+          <div class="banner-pills">
+            <span class="chip">إضافة</span>
+            <span class="chip">تعديل</span>
+            <span class="chip">حذف</span>
+            <span class="chip">تكرار</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div id="dashboard-kpis" class="container kpi-grid"></div>
+      </section>
+
+      <section class="section">
+        <div class="container dashboard-toolbar glass reveal">
+          <label class="field search-field">
+            <span>البحث في الطلبات</span>
+            <input id="order-search" type="search" placeholder="رقم الطلب، العميل، المدينة..." />
+          </label>
+          <label class="field select-field">
+            <span>الحالة</span>
+            <select id="order-status">
+              <option value="all">الكل</option>
+              <option value="confirmed">مؤكد</option>
+              <option value="pending">قيد المراجعة</option>
+              <option value="shipped">تم الشحن</option>
+              <option value="delivered">تم التسليم</option>
+            </select>
+          </label>
+          <label class="field select-field">
+            <span>الترتيب</span>
+            <select id="order-sort">
+              <option value="latest">الأحدث</option>
+              <option value="amount-desc">الأعلى قيمة</option>
+              <option value="amount-asc">الأقل قيمة</option>
+              <option value="points-desc">الأعلى نقاطًا</option>
+            </select>
+          </label>
+          <button class="btn btn-primary" id="add-order-btn" type="button">إضافة طلب جديد</button>
+        </div>
+        <div class="container table-shell glass reveal">
+          <div id="orders-table"></div>
+          <div id="orders-pagination" class="pagination"></div>
+        </div>
+      </section>
+    </main>
+
+    <div class="modal" id="order-modal" aria-hidden="true">
+      <div class="modal-card glass">
+        <div class="modal-head">
+          <strong id="modal-title">إضافة طلب جديد</strong>
+          <button class="icon-btn" type="button" data-close-modal>×</button>
+        </div>
+        <form id="order-form" class="form-grid">
+          <input type="hidden" name="id" />
+          <label class="field"><span>العميل</span><input type="text" name="client" required /></label>
+          <label class="field"><span>المدينة</span><input type="text" name="city" required /></label>
+          <label class="field"><span>الإجمالي</span><input type="number" name="amount" min="0" required /></label>
+          <label class="field"><span>النقاط</span><input type="number" name="points" min="0" required /></label>
+          <label class="field"><span>الحالة</span>
+            <select name="status">
+              <option value="confirmed">مؤكد</option>
+              <option value="pending">قيد المراجعة</option>
+              <option value="shipped">تم الشحن</option>
+              <option value="delivered">تم التسليم</option>
+            </select>
+          </label>
+          <label class="field"><span>عدد الكراتين</span><input type="number" name="cartons" min="1" required /></label>
+          <button class="btn btn-primary" type="submit">حفظ الطلب</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="site-footer"></div>
+  </body>
+</html>

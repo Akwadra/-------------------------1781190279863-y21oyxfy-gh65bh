@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>تواصل معنا | أكوادرا للمشروبات</title>
+    <meta name="description" content="تواصل مع فريق الجملة، أرسل طلب توريد، أو تعرف على الفروع ومناطق التغطية." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Changa:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="script.js"></script>
+  </head>
+  <body data-page="contact">
+    <div id="site-header"></div>
+
+    <main id="main">
+      <section class="section page-hero">
+        <div class="container hero-banner glass reveal">
+          <div>
+            <span class="eyebrow">التواصل وخدمة الجملة</span>
+            <h1>فريقنا جاهز للرد على استفسارات الجملة، التسعير، والتوريد المخصص للفروع.</h1>
+            <p>استخدم نموذج التواصل أو اختر الفرع الأقرب، وسننسق معك تفاصيل الطلب والموعد المناسب للتسليم.</p>
+          </div>
+          <div class="banner-pills">
+            <span class="chip">واتساب</span>
+            <span class="chip">بريد رسمي</span>
+            <span class="chip">فروع متعددة</span>
+            <span class="chip">رد سريع</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container contact-grid">
+          <div class="glass reveal panel">
+            <span class="eyebrow">الفروع ومناطق التغطية</span>
+            <div id="branch-cards" class="branch-grid"></div>
+          </div>
+          <div class="glass reveal panel">
+            <span class="eyebrow">أرسل طلبك</span>
+            <form id="contact-form" class="form-grid">
+              <label class="field"><span>الاسم</span><input type="text" name="name" required /></label>
+              <label class="field"><span>الجوال</span><input type="tel" name="phone" required /></label>
+              <label class="field"><span>المدينة</span><input type="text" name="city" required /></label>
+              <label class="field full"><span>رسالتك</span><textarea name="message" rows="5" placeholder="أحتاج عرض توريد لمتجر أو مطعم أو سلسلة فروع..."></textarea></label>
+              <button class="btn btn-primary" type="submit">إرسال الاستفسار</button>
+            </form>
+            <div class="form-note" id="contact-response"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div id="site-footer"></div>
+  </body>
+</html>

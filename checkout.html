@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>إتمام الطلب | أكوادرا للمشروبات</title>
+    <meta name="description" content="إكمال طلب الجملة مع بيانات التوصيل والدفع وملخص الطلب والنقاط." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Changa:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="script.js"></script>
+  </head>
+  <body data-page="checkout">
+    <div id="site-header"></div>
+
+    <main id="main">
+      <section class="section page-hero">
+        <div class="container hero-banner glass reveal">
+          <div>
+            <span class="eyebrow">الدفع والتسليم</span>
+            <h1>أكمل بيانات التوصيل والفوترة، ثم ثبّت طلب الجملة خلال خطوة واحدة.</h1>
+            <p>توفر صفحة الدفع ملخصًا دقيقًا للعناصر، النقاط المتوقعة، ومعلومات الإرسال قبل تأكيد الطلب.</p>
+          </div>
+          <div class="banner-pills">
+            <span class="chip">فاتورة</span>
+            <span class="chip">عنوان تسليم</span>
+            <span class="chip">طريقة دفع</span>
+            <span class="chip">نقاط متوقعة</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container checkout-grid">
+          <aside class="glass reveal panel">
+            <span class="eyebrow">ملخص السلة</span>
+            <div id="checkout-summary"></div>
+          </aside>
+          <div class="glass reveal panel">
+            <span class="eyebrow">معلومات العميل</span>
+            <form id="checkout-form" class="form-grid">
+              <label class="field"><span>اسم العميل / الشركة</span><input type="text" name="customer" required /></label>
+              <label class="field"><span>رقم الجوال</span><input type="tel" name="phone" required /></label>
+              <label class="field"><span>المدينة</span><input type="text" name="city" required /></label>
+              <label class="field full"><span>العنوان التفصيلي</span><textarea name="address" rows="4" required></textarea></label>
+              <label class="field"><span>طريقة الدفع</span>
+                <select name="payment">
+                  <option value="cash">نقدًا عند الاستلام</option>
+                  <option value="bank">تحويل بنكي</option>
+                  <option value="corporate">حساب شركة</option>
+                </select>
+              </label>
+              <label class="field"><span>ملاحظة الطلب</span><input type="text" name="note" placeholder="تسليم صباحي، ترتيب حاوية، ..." /></label>
+              <button class="btn btn-primary" type="submit">تأكيد الطلب</button>
+            </form>
+            <div class="form-note" id="checkout-response"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div id="site-footer"></div>
+  </body>
+</html>

@@ -1,7 +1,42 @@
 const STORAGE = {
   cart: 'akwadra-cart',
   orders: 'akwadra-orders',
+  adminSession: 'akwadra-admin-session',
 };
+
+const ADMIN_ROLES = {
+  'super-admin': {
+    label: 'المشرف العام',
+    permissions: ['view-dashboard', 'add-order', 'edit-order', 'duplicate-order', 'delete-order'],
+    username: 'admin',
+    password: 'admin123',
+  },
+  manager: {
+    label: 'مدير العمليات',
+    permissions: ['view-dashboard', 'add-order', 'edit-order', 'duplicate-order'],
+    username: 'manager',
+    password: 'manager123',
+  },
+  operator: {
+    label: 'موظف العمليات',
+    permissions: ['view-dashboard', 'duplicate-order'],
+    username: 'operator',
+    password: 'operator123',
+  },
+  accountant: {
+    label: 'قسم الحسابات',
+    permissions: ['view-dashboard'],
+    username: 'finance',
+    password: 'finance123',
+  },
+};
+
+const ADMIN_ROLE_OPTIONS = [
+  { value: 'super-admin', label: 'المشرف العام' },
+  { value: 'manager', label: 'مدير العمليات' },
+  { value: 'operator', label: 'موظف العمليات' },
+  { value: 'accountant', label: 'قسم الحسابات' },
+];
 
 const PRODUCTS = [
   {
@@ -252,6 +287,36 @@ function saveOrders(orders) {
   writeJSON(STORAGE.orders, orders);
 }
 
+function getAdminSession() {
+  return readJSON(STORAGE.adminSession, null);
+}
+
+function saveAdminSession(session) {
+  writeJSON(STORAGE.adminSession, session);
+  document.dispatchEvent(new CustomEvent('akwadra-admin-session-updated'));
+}
+
+function clearAdminSession() {
+  localStorage.removeItem(STORAGE.adminSession);
+  document.dispatchEvent(new CustomEvent('akwadra-admin-session-updated'));
+}
+
+function getAdminRole(role) {
+  return ADMIN_ROLES[role] || null;
+}
+
+function hasAdminPermission(permission) {
+  const session = getAdminSession();
+  const role = session ? getAdminRole(session.role) : null;
+  return Boolean(role && role.permissions.includes(permission));
+}
+
+function getSafeReturnPath() {
+  const value = new URLSearchParams(location.search).get('return');
+  if (!value) return 'dashboard.html';
+  return value.endsWith('.html') && !value.includes('://') ? value : 'dashboard.html';
+}
+
 function getProduct(slug) {
   return PRODUCTS.find((product) => product.slug === slug) || PRODUCTS[0];
 }
@@ -326,12 +391,15 @@ function renderCountUps() {
 
 function buildHeader() {
   const current = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  const session = getAdminSession();
+  const role = session ? getAdminRole(session.role) : null;
   const links = [
     ['index.html', 'الرئيسية'],
     ['catalog.html', 'الكتالوج'],
     ['wholesale.html', 'الجملة'],
     ['points.html', 'النقاط'],
     ['dashboard.html', 'اللوحة'],
+    ['admin-login.html', 'دخول الإدارة'],
     ['contact.html', 'تواصل'],
     ['cart.html', 'السلة'],
     ['checkout.html', 'الدفع'],
@@ -360,6 +428,7 @@ function buildHeader() {
       </nav>
       <div class="nav-actions">
         <a class="btn btn-ghost" href="wholesale.html">طلب جملة</a>
+        ${session ? `<span class="session-chip">${role?.label || session.role}</span><button class="btn btn-ghost" data-admin-logout type="button">تسجيل الخروج</button>` : ''}
         <a class="btn btn-primary" href="cart.html">سلة الجملة <span class="cart-badge" data-cart-count>0</span></a>
       </div>
     </div>
@@ -381,6 +450,7 @@ function buildFooter() {
             <a href="points.html">النقاط</a>
             <a href="wholesale.html">الجملة</a>
             <a href="dashboard.html">لوحة الإدارة</a>
+            <a href="admin-login.html">دخول الإدارة</a>
           </div>
         </div>
         <div class="footer-bar">
@@ -827,6 +897,66 @@ function initCheckoutPage() {
   });
 }
 
+function initAdminLoginPage() {
+  const form = qs('#admin-login-form');
+  const message = qs('#admin-login-message');
+  const rolePreview = qs('#admin-role-preview');
+  const session = getAdminSession();
+
+  if (session) {
+    window.location.href = getSafeReturnPath();
+    return;
+  }
+
+  if (!form || !message || !rolePreview) return;
+
+  rolePreview.innerHTML = ADMIN_ROLE_OPTIONS.map((role) => {
+    const config = getAdminRole(role.value);
+    return `
+      <article class="role-card">
+        <div class="role-head">
+          <strong>${role.label}</strong>
+          <span class="badge">${config?.permissions.length || 0} صلاحيات</span>
+        </div>
+        <p>${config?.permissions
+          .map((permission) => {
+            const labels = {
+              'view-dashboard': 'عرض اللوحة',
+              'add-order': 'إضافة الطلبات',
+              'edit-order': 'تعديل الطلبات',
+              'duplicate-order': 'تكرار الطلبات',
+              'delete-order': 'حذف الطلبات',
+            };
+            return labels[permission] || permission;
+          })
+          .join(' · ')}</p>
+      </article>
+    `;
+  }).join('');
+
+  const roleSelect = qs('#admin-role');
+  if (roleSelect) {
+    roleSelect.innerHTML = ADMIN_ROLE_OPTIONS.map((role) => `<option value="${role.value}">${role.label}</option>`).join('');
+  }
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const role = String(data.get('role') || '');
+    const username = String(data.get('username') || '').trim();
+    const password = String(data.get('password') || '').trim();
+    const roleConfig = getAdminRole(role);
+
+    if (!roleConfig || roleConfig.username !== username || roleConfig.password !== password) {
+      message.textContent = 'بيانات الدخول غير صحيحة، تحقق من اسم المستخدم وكلمة المرور والصلاحية المختارة.';
+      return;
+    }
+
+    saveAdminSession({ role, username, loginAt: new Date().toISOString() });
+    window.location.href = getSafeReturnPath();
+  });
+}
+
 function initPointsPage() {
   const overview = qs('#points-overview');
   const calc = qs('#points-calculator');
@@ -948,6 +1078,12 @@ function orderStatusTag(status) {
 }
 
 function initDashboardPage() {
+  const session = getAdminSession();
+  if (!session || !hasAdminPermission('view-dashboard')) {
+    window.location.href = 'admin-login.html?return=dashboard.html';
+    return;
+  }
+
   const kpis = qs('#dashboard-kpis');
   const table = qs('#orders-table');
   const pagination = qs('#orders-pagination');
@@ -995,6 +1131,7 @@ function initDashboardPage() {
     }, { amount: 0, points: 0, cartons: 0 });
     const active = data.filter((order) => order.status === 'pending').length;
     kpis.innerHTML = `
+      <article class="kpi reveal admin-kpi"><strong>${getAdminRole(session.role)?.label || session.role}</strong><span>الدور النشط</span></article>
       <article class="kpi reveal"><strong>${number.format(data.length)}</strong><span>إجمالي الطلبات</span></article>
       <article class="kpi reveal"><strong>${money.format(totals.amount)}</strong><span>إجمالي المبيعات</span></article>
       <article class="kpi reveal"><strong>${number.format(totals.points)}</strong><span>رصيد النقاط</span></article>
@@ -1066,9 +1203,9 @@ function initDashboardPage() {
               <td>${orderStatusTag(order.status)}</td>
               <td>
                 <div class="table-actions-cell">
-                  <button class="table-action" data-edit-order="${order.id}" type="button">تعديل</button>
-                  <button class="table-action" data-duplicate-order="${order.id}" type="button">تكرار</button>
-                  <button class="table-action remove-btn" data-delete-order="${order.id}" type="button">حذف</button>
+                  ${hasAdminPermission('edit-order') ? `<button class="table-action" data-edit-order="${order.id}" type="button">تعديل</button>` : ''}
+                  ${hasAdminPermission('duplicate-order') ? `<button class="table-action" data-duplicate-order="${order.id}" type="button">تكرار</button>` : ''}
+                  ${hasAdminPermission('delete-order') ? `<button class="table-action remove-btn" data-delete-order="${order.id}" type="button">حذف</button>` : ''}
                 </div>
               </td>
             </tr>
@@ -1102,7 +1239,13 @@ function initDashboardPage() {
     renderTable();
   }
 
-  addBtn.addEventListener('click', () => openModal());
+  addBtn.addEventListener('click', () => {
+    if (!hasAdminPermission('add-order')) {
+      toast('صلاحية الإضافة غير متاحة لهذا الدور');
+      return;
+    }
+    openModal();
+  });
   modal.addEventListener('click', (event) => {
     if (event.target === modal || event.target.closest('[data-close-modal]')) closeModal();
   });
@@ -1177,6 +1320,17 @@ function initContactPage() {
 
 function initPage() {
   ensureData();
+
+  if (document.body.dataset.page === 'admin-login' && getAdminSession()) {
+    window.location.href = getSafeReturnPath();
+    return;
+  }
+
+  if (document.body.dataset.page === 'dashboard' && (!getAdminSession() || !hasAdminPermission('view-dashboard'))) {
+    window.location.href = 'admin-login.html?return=dashboard.html';
+    return;
+  }
+
   mountShell();
   syncCartBadges();
   setupReveal();
@@ -1188,6 +1342,15 @@ function initPage() {
   qsa('[data-add-to-cart]').forEach((button) => button.addEventListener('click', () => addToCart(button.dataset.addToCart)));
   qsa('[data-claim-reward]').forEach((button) => button.addEventListener('click', () => toast(`تم طلب الاستبدال: ${button.dataset.claimReward}`)));
 
+  const logoutButton = qs('[data-admin-logout]');
+  if (logoutButton) {
+    logoutButton.addEventListener('click', () => {
+      clearAdminSession();
+      toast('تم تسجيل الخروج من الإدارة');
+      window.location.href = 'admin-login.html';
+    });
+  }
+
   const page = document.body.dataset.page;
   if (page === 'home') initHome();
   if (page === 'catalog') initCatalog();
@@ -1195,6 +1358,7 @@ function initPage() {
   if (page === 'wholesale') initWholesalePage();
   if (page === 'points') initPointsPage();
   if (page === 'dashboard') initDashboardPage();
+  if (page === 'admin-login') initAdminLoginPage();
   if (page === 'contact') initContactPage();
   if (page === 'cart') initCartPage();
   if (page === 'checkout') initCheckoutPage();

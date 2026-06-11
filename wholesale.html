@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>الجملة والتسعير | أكوادرا للمشروبات</title>
+    <meta name="description" content="صفحة الجملة والتسعير للشركات والمتاجر مع حزم الطلب، الخصومات، وحساب النقاط." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Changa:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="script.js"></script>
+  </head>
+  <body data-page="wholesale">
+    <div id="site-header"></div>
+
+    <main id="main">
+      <section class="section page-hero">
+        <div class="container hero-banner glass reveal">
+          <div>
+            <span class="eyebrow">التسعير بالجملة</span>
+            <h1>بنية تسعير واضحة تمنح الشركات والمحلات أفضلية عند ارتفاع حجم الطلب.</h1>
+            <p>
+              اختر حجم الطلب، شاهد الخصومات، واحصل على تقدير النقاط، ثم أرسل طلب التوريد مباشرة من هذه الصفحة.
+            </p>
+          </div>
+          <div class="banner-pills">
+            <span class="chip">خصومات حجمية</span>
+            <span class="chip">نقاط مضاعفة</span>
+            <span class="chip">تجهيز أسرع</span>
+            <span class="chip">طلب فوري</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container wholesale-grid">
+          <div class="glass reveal panel" id="wholesale-calculator"></div>
+          <div class="glass reveal panel" id="wholesale-tiers"></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container section-heading reveal">
+          <span class="eyebrow">طلب التوريد</span>
+          <h2>أرسل بياناتك لنجهز عرض الجملة المناسب لطبيعة نشاطك.</h2>
+        </div>
+        <div class="container wholesale-form-wrap glass reveal">
+          <form class="form-grid" id="wholesale-form">
+            <label class="field"><span>اسم الشركة / المتجر</span><input type="text" name="company" required /></label>
+            <label class="field"><span>رقم الجوال</span><input type="tel" name="phone" required /></label>
+            <label class="field"><span>المدينة</span><input type="text" name="city" required /></label>
+            <label class="field"><span>عدد الكراتين المتوقع</span><input type="number" name="cartons" min="12" value="24" required /></label>
+            <label class="field full"><span>الأصناف المفضلة</span><textarea name="notes" rows="4" placeholder="بيبسي، كوكاكولا، ميرندا، سفن أب..."></textarea></label>
+            <button class="btn btn-primary" type="submit">إرسال طلب الجملة</button>
+          </form>
+          <div class="form-note" id="wholesale-response"></div>
+        </div>
+      </section>
+    </main>
+
+    <div id="site-footer"></div>
+  </body>
+</html>

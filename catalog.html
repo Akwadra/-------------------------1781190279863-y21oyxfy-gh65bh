@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>الكتالوج | أكوادرا للمشروبات</title>
+    <meta
+      name="description"
+      content="كتالوج الجملة للمشروبات الغازية مع فلاتر بحث، ترتيب، صفحات، وإضافة مباشرة إلى السلة."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Changa:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="script.js"></script>
+  </head>
+  <body data-page="catalog">
+    <div id="site-header"></div>
+
+    <main id="main">
+      <section class="section page-hero">
+        <div class="container hero-banner glass reveal">
+          <div>
+            <span class="eyebrow">الكتالوج المباشر للجملة</span>
+            <h1>فلتر المشروبات حسب العلامة والحجم والسعر، ثم أضفها إلى السلة خلال ثوانٍ.</h1>
+            <p>
+              تم بناء الكتالوج ليخدم حسابات الجملة: بحث فوري، ترتيب مرن، تقسيم صفحات، وعرض واضح للنقاط المكتسبة من كل كرتون.
+            </p>
+          </div>
+          <div class="banner-pills">
+            <span class="chip">بحث فوري</span>
+            <span class="chip">ترتيب الأسعار</span>
+            <span class="chip">صفحات متعددة</span>
+            <span class="chip">نقاط تلقائية</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container catalog-layout">
+          <div class="catalog-main">
+            <div class="catalog-toolbar glass reveal">
+              <label class="field search-field">
+                <span>ابحث في الكتالوج</span>
+                <input id="catalog-search" type="search" placeholder="بيبسي، كوكاكولا، ميرندا، سفن أب..." />
+              </label>
+              <label class="field select-field">
+                <span>الترتيب</span>
+                <select id="catalog-sort">
+                  <option value="featured">المميز أولًا</option>
+                  <option value="price-asc">السعر من الأقل</option>
+                  <option value="price-desc">السعر من الأعلى</option>
+                  <option value="points-desc">الأعلى نقاطًا</option>
+                  <option value="name">أبجديًا</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="filter-row reveal" id="catalog-filters">
+              <button class="filter-chip is-active" data-category="all">الكل</button>
+              <button class="filter-chip" data-category="cola">كولا</button>
+              <button class="filter-chip" data-category="zero">زيرو</button>
+              <button class="filter-chip" data-category="fruit">فاكهة</button>
+              <button class="filter-chip" data-category="sparkling">منعش</button>
+            </div>
+
+            <div id="catalog-grid" class="catalog-grid"></div>
+            <div id="catalog-pagination" class="pagination"></div>
+          </div>
+
+          <aside class="catalog-aside glass reveal">
+            <div class="aside-box">
+              <span class="eyebrow">سلة الجملة</span>
+              <h2>متابعة سريعة للطلبات</h2>
+              <p>أضف الأصناف من الكتالوج، ثم راقب إجمالي الكراتين والنقاط المكتسبة مباشرة.</p>
+            </div>
+            <div id="catalog-mini-cart" class="mini-cart"></div>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <div id="site-footer"></div>
+  </body>
+</html>

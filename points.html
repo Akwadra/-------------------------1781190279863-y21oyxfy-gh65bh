@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>النقاط والمكافآت | أكوادرا للمشروبات</title>
+    <meta name="description" content="لوحة النقاط للمشترين بالجملة مع رصيد النقاط، المكافآت، وسجل الاستبدال." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Changa:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="script.js"></script>
+  </head>
+  <body data-page="points">
+    <div id="site-header"></div>
+
+    <main id="main">
+      <section class="section page-hero">
+        <div class="container hero-banner glass reveal">
+          <div>
+            <span class="eyebrow">نظام المكافآت</span>
+            <h1>اجمع النقاط من كل شحنة، ثم حوّلها إلى مزايا حقيقية تحسن أرباح الجملة.</h1>
+            <p>
+              تم تصميم صفحة النقاط لتعرض الرصيد الحالي، حاسبة الاستحقاق، المكافآت المتاحة، وسجل الاستبدالات بوضوحٍ تجاري.
+            </p>
+          </div>
+          <div class="banner-pills">
+            <span class="chip">رصيد مباشر</span>
+            <span class="chip">مزايا شحن</span>
+            <span class="chip">استبدال سريع</span>
+            <span class="chip">ولاء متدرج</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container points-overview" id="points-overview"></div>
+      </section>
+
+      <section class="section">
+        <div class="container points-grid">
+          <div class="glass reveal panel" id="points-calculator"></div>
+          <div class="glass reveal panel" id="points-history"></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container section-heading reveal">
+          <span class="eyebrow">المكافآت القابلة للاستبدال</span>
+          <h2>كلما زاد حجم الجملة، أصبحت المكافآت التجارية أكثر قيمة وتأثيرًا.</h2>
+        </div>
+        <div id="reward-grid" class="container card-grid three-up"></div>
+      </section>
+    </main>
+
+    <div id="site-footer"></div>
+  </body>
+</html>
